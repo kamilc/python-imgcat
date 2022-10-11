@@ -200,7 +200,7 @@ def imgcat(data, filename=None,
         fp = sys.stdout if IS_PY_2 \
             else getattr(sys.stdout, 'buffer', sys.stdout)  # for stdout, use buffer interface (py3)
 
-    if not if IS_PY_2:
+    if not IS_PY_2:
         fp.write = _write
 
     buf = to_content_buf(data)
