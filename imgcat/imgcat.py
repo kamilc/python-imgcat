@@ -190,7 +190,7 @@ def imgcat(data, filename=None,
     '''
     if fp is None:
         fp = sys.stdout if IS_PY_2 \
-            else sys.stdout.buffer  # for stdout, use buffer interface (py3)
+            else getattr(sys.stdout, 'buffer', sys.stdout)  # for stdout, use buffer interface (py3)
 
     buf = to_content_buf(data)
     if len(buf) == 0:
