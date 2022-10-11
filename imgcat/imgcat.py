@@ -188,9 +188,20 @@ def imgcat(data, filename=None,
         height: the height for displaying image, in number of lines (rows)
         fp: The buffer to write to, defaults sys.stdout
     '''
+    _prev_write = fp.write if fp else sys.stdout.write
+
+    def _write(s):
+        if not isinstance(s, str):
+            s = s.decode('utf-8')
+
+        return _prev_write(s)
+
     if fp is None:
         fp = sys.stdout if IS_PY_2 \
             else getattr(sys.stdout, 'buffer', sys.stdout)  # for stdout, use buffer interface (py3)
+
+    if not if IS_PY_2:
+        fp.write = _write
 
     buf = to_content_buf(data)
     if len(buf) == 0:
